@@ -100,6 +100,7 @@
     <Content Include="app\controllers\home.controller.js" />
     <Content Include="app\controllers\index.controller.js" />
     <Content Include="app\controllers\login.controller.js" />
+    <Content Include="app\controllers\orders.controller.js" />
     <Content Include="app\controllers\signup.controller.js" />
     <Content Include="app\services\auth.service.js" />
     <Content Include="app\services\authInterceptor.service.js" />
