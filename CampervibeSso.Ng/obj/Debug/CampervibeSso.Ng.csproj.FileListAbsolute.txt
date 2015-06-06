@@ -1,0 +1,6 @@
+C:\Code\CampervibeSso\CampervibeSso.Ng\bin\CampervibeSso.Ng.dll.config
+C:\Code\CampervibeSso\CampervibeSso.Ng\bin\CampervibeSso.Ng.dll
+C:\Code\CampervibeSso\CampervibeSso.Ng\bin\CampervibeSso.Ng.pdb
+C:\Code\CampervibeSso\CampervibeSso.Ng\obj\Debug\CampervibeSso.Ng.csprojResolveAssemblyReference.cache
+C:\Code\CampervibeSso\CampervibeSso.Ng\obj\Debug\CampervibeSso.Ng.dll
+C:\Code\CampervibeSso\CampervibeSso.Ng\obj\Debug\CampervibeSso.Ng.pdb
