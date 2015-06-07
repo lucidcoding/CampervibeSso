@@ -27,6 +27,7 @@ namespace CampervibeSso.WebApi
         {
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
+#warning this need to be false for production.
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/oauth2/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
