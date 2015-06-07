@@ -1,4 +1,5 @@
-﻿using CampervibeSso.WebApi.Providers;
+﻿using CampervibeSso.WebApi.Formats;
+using CampervibeSso.WebApi.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
@@ -27,14 +28,16 @@ namespace CampervibeSso.WebApi
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/token"),
+                TokenEndpointPath = new PathString("/oauth2/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new SimpleAuthorizationServerProvider()
+                //Provider = new SimpleAuthorizationServerProvider(),
+                Provider = new CustomOAuthProvider(),
+                AccessTokenFormat = new CustomJwtFormat("http://jwtauthzsrv.azurewebsites.net")
             };
 
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            //app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 
         }
     }

@@ -34,3 +34,7 @@ C:\Code\CampervibeSso\CampervibeSso.WebApi\bin\Microsoft.Owin.Cors.dll
 C:\Code\CampervibeSso\CampervibeSso.WebApi\bin\System.Web.Cors.dll
 C:\Code\CampervibeSso\CampervibeSso.WebApi\bin\Microsoft.Owin.Cors.xml
 C:\Code\CampervibeSso\CampervibeSso.WebApi\obj\Debug\CampervibeSso.WebApi.csprojResolveAssemblyReference.cache
+C:\Code\CampervibeSso\CampervibeSso.WebApi\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Code\CampervibeSso\CampervibeSso.WebApi\bin\Thinktecture.IdentityModel.Core.dll
+C:\Code\CampervibeSso\CampervibeSso.WebApi\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\Code\CampervibeSso\CampervibeSso.WebApi\bin\Thinktecture.IdentityModel.Core.pdb
