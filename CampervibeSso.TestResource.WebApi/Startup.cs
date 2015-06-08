@@ -28,7 +28,7 @@ namespace CampervibeSso.TestResource.WebApi
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            var issuer = "http://localhost:56818/";
+            var issuer = "http://localhost:56818";
             var audience = "099153c2625149bc8ecb3e85e03f0022";
             var secret = TextEncodings.Base64Url.Decode("IxrAjDoa2FqElO7IhrSrUJELhUckePEPVpaePlS_Xaw");
 
