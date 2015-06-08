@@ -33,7 +33,8 @@ namespace CampervibeSso.WebApi
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 //Provider = new SimpleAuthorizationServerProvider(),
                 Provider = new CustomOAuthProvider(),
-                AccessTokenFormat = new CustomJwtFormat("http://jwtauthzsrv.azurewebsites.net")
+                //AccessTokenFormat = new CustomJwtFormat("http://jwtauthzsrv.azurewebsites.net")
+                AccessTokenFormat = new CustomJwtFormat("http://localhost:56818")
             };
 
             // Token Generation

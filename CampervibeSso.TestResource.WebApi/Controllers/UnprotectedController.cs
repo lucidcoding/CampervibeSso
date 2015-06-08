@@ -8,7 +8,6 @@ using System.Web.Http;
 
 namespace CampervibeSso.TestResource.WebApi.Controllers
 {
-	[Authorize]
 	[RoutePrefix("api/unprotected")]
     public class UnprotectedController : ApiController
 	{
