@@ -33,9 +33,16 @@ namespace CampervibeSso.WebApi.Repositories
             return result;
         }
 
-        public async Task<IdentityUser> FindUser(string userName, string password)
+        public async Task<IdentityUser> FindUserAsync(string userName, string password)
         {
             IdentityUser user = await _userManager.FindAsync(userName, password);
+
+            return user;
+        }
+
+        public IdentityUser FindUser(string userName, string password)
+        {
+            IdentityUser user = _userManager.Find(userName, password);
 
             return user;
         }

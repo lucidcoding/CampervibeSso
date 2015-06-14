@@ -1,4 +1,6 @@
-﻿using CampervibeSso.WebApi.Stores;
+﻿using CampervibeSso.WebApi.Repositories;
+using CampervibeSso.WebApi.Stores;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System;
@@ -47,31 +49,61 @@ namespace CampervibeSso.WebApi.Providers
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            //Dummy check here, you need to do your DB checks against memebrship system http://bit.ly/SPAAuthCode
-            if (context.UserName != context.Password)
+            using (AuthRepository _repo = new AuthRepository())
             {
-                context.SetError("invalid_grant", "The user name or password is incorrect");
-                //return;
-                return Task.FromResult<object>(null);
+                IdentityUser user = _repo.FindUser(context.UserName, context.Password);
+
+                if (user == null)
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return Task.FromResult<object>(null);
+                }
+                else
+                {
+                    var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                    identity.AddClaim(new Claim("sub", context.UserName));
+                    identity.AddClaim(new Claim("role", "user"));
+                    identity.AddClaim(new Claim("userId", user.Id));
+                    context.Validated(identity);
+
+                    var props = new AuthenticationProperties(new Dictionary<string, string>
+                    {
+                        {
+                             "audience", (context.ClientId == null) ? string.Empty : context.ClientId
+                        }
+                    });
+
+                    var ticket = new AuthenticationTicket(identity, props);
+                    context.Validated(ticket);
+                    return Task.FromResult<object>(null);
+                }
             }
 
-            var identity = new ClaimsIdentity("JWT");
+            //Dummy check here, you need to do your DB checks against memebrship system http://bit.ly/SPAAuthCode
+            //if (context.UserName != context.Password)
+            //{
+            //    context.SetError("invalid_grant", "The user name or password is incorrect");
+            //    //return;
+            //    return Task.FromResult<object>(null);
+            //}
 
-            identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim("sub", context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "Manager"));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "Supervisor"));
+            //var identity = new ClaimsIdentity("JWT");
 
-            var props = new AuthenticationProperties(new Dictionary<string, string>
-                {
-                    {
-                         "audience", (context.ClientId == null) ? string.Empty : context.ClientId
-                    }
-                });
+            //identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+            //identity.AddClaim(new Claim("sub", context.UserName));
+            //identity.AddClaim(new Claim(ClaimTypes.Role, "Manager"));
+            //identity.AddClaim(new Claim(ClaimTypes.Role, "Supervisor"));
 
-            var ticket = new AuthenticationTicket(identity, props);
-            context.Validated(ticket);
-            return Task.FromResult<object>(null);
+            //var props = new AuthenticationProperties(new Dictionary<string, string>
+            //    {
+            //        {
+            //             "audience", (context.ClientId == null) ? string.Empty : context.ClientId
+            //        }
+            //    });
+
+            //var ticket = new AuthenticationTicket(identity, props);
+            //context.Validated(ticket);
+            //return Task.FromResult<object>(null);
         }
     }
 }
