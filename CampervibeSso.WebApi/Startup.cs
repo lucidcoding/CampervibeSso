@@ -5,6 +5,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -34,7 +35,8 @@ namespace CampervibeSso.WebApi
                 //Provider = new SimpleAuthorizationServerProvider(),
                 Provider = new CustomOAuthProvider(),
                 //AccessTokenFormat = new CustomJwtFormat("http://jwtauthzsrv.azurewebsites.net")
-                AccessTokenFormat = new CustomJwtFormat("http://localhost:56818")
+                //AccessTokenFormat = new CustomJwtFormat("http://localhost:56818")
+                AccessTokenFormat = new CustomJwtFormat(ConfigurationManager.AppSettings["AuthorizationServerUrl"])
             };
 
             // Token Generation
