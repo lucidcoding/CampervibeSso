@@ -22,7 +22,7 @@ namespace CampervibeSso.WebApi.Entities
         [Required]
         public string Name { get; set; }
 
-        private static Audience Create(string name)
+        public static Audience Create(string name)
         {
             var audience = new Audience();
             audience.ClientId = Guid.NewGuid().ToString("N");

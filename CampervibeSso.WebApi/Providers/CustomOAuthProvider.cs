@@ -1,5 +1,4 @@
 ﻿using CampervibeSso.WebApi.Repositories;
-using CampervibeSso.WebApi.Stores;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
@@ -14,7 +13,6 @@ namespace CampervibeSso.WebApi.Providers
 {
     public class CustomOAuthProvider : OAuthAuthorizationServerProvider
     {
-
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             string clientId = string.Empty;
@@ -32,16 +30,20 @@ namespace CampervibeSso.WebApi.Providers
                 return Task.FromResult<object>(null);
             }
 
-            var audience = AudiencesStore.FindAudience(context.ClientId);
-
-            if (audience == null)
+            using (AudienceRepository audienceRepsotiory = new AudienceRepository())
             {
-                context.SetError("invalid_clientId", string.Format("Invalid client_id '{0}'", context.ClientId));
+                //var audience = AudiencesStore.FindAudience(context.ClientId);
+                var audience = audienceRepsotiory.Find(context.ClientId);
+
+                if (audience == null)
+                {
+                    context.SetError("invalid_clientId", string.Format("Invalid client_id '{0}'", context.ClientId));
+                    return Task.FromResult<object>(null);
+                }
+
+                context.Validated();
                 return Task.FromResult<object>(null);
             }
-
-            context.Validated();
-            return Task.FromResult<object>(null);
         }
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)

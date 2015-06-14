@@ -1,6 +1,6 @@
 ﻿using CampervibeSso.WebApi.Entities;
 using CampervibeSso.WebApi.Models;
-using CampervibeSso.WebApi.Stores;
+using CampervibeSso.WebApi.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +21,15 @@ namespace CampervibeSso.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            Audience newAudience = AudiencesStore.AddAudience(audienceModel.Name);
+            using(var audienceRepository = new AudienceRepository())
+            {
+                var audience = Audience.Create(audienceModel.Name);
+                audienceRepository.Add(audience);
 
-            return Ok<Audience>(newAudience);
+            //Audience newAudience = AudiencesStore.AddAudience(audienceModel.Name);
+
+                return Ok<Audience>(audience);
+            }
         }
     }
 }
