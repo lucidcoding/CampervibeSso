@@ -44,19 +44,20 @@ namespace CampervibeSso.WebApi.Providers
             return Task.FromResult<object>(null);
         }
 
-        public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
             using (AuthRepository _repo = new AuthRepository())
             {
-                IdentityUser user = _repo.FindUser(context.UserName, context.Password);
+                IdentityUser user = await _repo.FindUserAsync(context.UserName, context.Password);
 
                 if (user == null)
                 {
                     context.SetError("invalid_grant", "The user name or password is incorrect.");
-                    return Task.FromResult<object>(null);
+                    //return Task.FromResult<object>(null);
+                    return;
                 }
                 else
                 {
@@ -75,7 +76,8 @@ namespace CampervibeSso.WebApi.Providers
 
                     var ticket = new AuthenticationTicket(identity, props);
                     context.Validated(ticket);
-                    return Task.FromResult<object>(null);
+                    //return Task.FromResult<object>(null);
+                    return;
                 }
             }
 
