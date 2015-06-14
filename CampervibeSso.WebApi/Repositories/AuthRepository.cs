@@ -1,4 +1,5 @@
-﻿using CampervibeSso.WebApi.Models;
+﻿using CampervibeSso.WebApi.Data;
+using CampervibeSso.WebApi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -33,19 +34,19 @@ namespace CampervibeSso.WebApi.Repositories
             return result;
         }
 
-        public async Task<IdentityUser> FindUserAsync(string userName, string password)
+        public async Task<IdentityUser> FindUser(string userName, string password)
         {
             IdentityUser user = await _userManager.FindAsync(userName, password);
 
             return user;
         }
 
-        public IdentityUser FindUser(string userName, string password)
-        {
-            IdentityUser user = _userManager.Find(userName, password);
+        //public IdentityUser FindUser(string userName, string password)
+        //{
+        //    IdentityUser user = _userManager.Find(userName, password);
 
-            return user;
-        }
+        //    return user;
+        //}
 
         public void Dispose()
         {

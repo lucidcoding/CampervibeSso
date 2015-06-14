@@ -51,12 +51,11 @@ namespace CampervibeSso.WebApi.Providers
 
             using (AuthRepository _repo = new AuthRepository())
             {
-                IdentityUser user = await _repo.FindUserAsync(context.UserName, context.Password);
+                IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
 
                 if (user == null)
                 {
                     context.SetError("invalid_grant", "The user name or password is incorrect.");
-                    //return Task.FromResult<object>(null);
                     return;
                 }
                 else
@@ -76,36 +75,9 @@ namespace CampervibeSso.WebApi.Providers
 
                     var ticket = new AuthenticationTicket(identity, props);
                     context.Validated(ticket);
-                    //return Task.FromResult<object>(null);
                     return;
                 }
             }
-
-            //Dummy check here, you need to do your DB checks against memebrship system http://bit.ly/SPAAuthCode
-            //if (context.UserName != context.Password)
-            //{
-            //    context.SetError("invalid_grant", "The user name or password is incorrect");
-            //    //return;
-            //    return Task.FromResult<object>(null);
-            //}
-
-            //var identity = new ClaimsIdentity("JWT");
-
-            //identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            //identity.AddClaim(new Claim("sub", context.UserName));
-            //identity.AddClaim(new Claim(ClaimTypes.Role, "Manager"));
-            //identity.AddClaim(new Claim(ClaimTypes.Role, "Supervisor"));
-
-            //var props = new AuthenticationProperties(new Dictionary<string, string>
-            //    {
-            //        {
-            //             "audience", (context.ClientId == null) ? string.Empty : context.ClientId
-            //        }
-            //    });
-
-            //var ticket = new AuthenticationTicket(identity, props);
-            //context.Validated(ticket);
-            //return Task.FromResult<object>(null);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace CampervibeSso.WebApi.Providers
 
             using (AuthRepository _repo = new AuthRepository())
             {
-                IdentityUser user = await _repo.FindUserAsync(context.UserName, context.Password);
+                IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
 
                 if (user == null)
                 {

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.Owin.Security.DataHandler.Encoder;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 
 namespace CampervibeSso.WebApi.Entities
@@ -19,5 +21,16 @@ namespace CampervibeSso.WebApi.Entities
         [MaxLength(100)]
         [Required]
         public string Name { get; set; }
+
+        private static Audience Create(string name)
+        {
+            var audience = new Audience();
+            audience.ClientId = Guid.NewGuid().ToString("N");
+            audience.Name = name;
+            var key = new byte[32];
+            RNGCryptoServiceProvider.Create().GetBytes(key);
+            audience.Base64Secret = TextEncodings.Base64Url.Encode(key);
+            return audience;
+        }
     }
 }
